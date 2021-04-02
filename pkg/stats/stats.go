@@ -1,16 +1,17 @@
 package stats
 
-import "github.com/Mekhrona/bank/pkg/types"
+import "github.com/Mekhrona/bank/v2/pkg/types"
 
 
 //Avg расчитывает среднюю сумму платежа.
 func Avg(payments []types.Payment) types.Money{
 	numberOfpayments:=0
 	sum:=0
-
 	for _, payment := range payments {
+		if !(payment.Status=="FAIL"){
 		numberOfpayments++
-		sum+=int(payment.Amount)	
+		sum+=int(payment.Amount)
+		}	
 	}
 
 	avg:=sum/numberOfpayments
@@ -22,7 +23,7 @@ func Avg(payments []types.Payment) types.Money{
 func TotalInCategory (payments []types.Payment, category types.Category) types.Money {
     sum:=0
 	for _, payment := range payments {
-		if payment.Category==category{
+		if payment.Category==category && !(payment.Status=="FAIL"){
 			sum+=int(payment.Amount)
 		}
 	}
