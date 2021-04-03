@@ -30,3 +30,35 @@ func TotalInCategory (payments []types.Payment, category types.Category) types.M
 	return types.Money(sum)
 
 }
+
+//FilterByCategory 
+func FilterByCategory( payments [] types.Payment, category types.Category) []types.Payment{
+
+	var filtered [] types.Payment
+	for _, payment := range payments {
+		if payment.Category==category {
+			filtered = append (filtered,payment)
+		}
+		
+	}
+
+return filtered
+
+}
+
+func CategoriesAvg(payments []types.Payment) map[types.Category]types.Money {
+    var i int
+	m := make(map[types.Category]types.Money)
+
+	for i=0; i<len(payments); i++ {
+		category:=payments[i].Category
+		paymentsInCat:=FilterByCategory(payments, category)
+		averageIncat:=Avg(paymentsInCat)
+        m[category]=averageIncat
+		
+	}
+	return m
+}
+
+
+
